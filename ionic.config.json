@@ -1,0 +1,7 @@
+{
+  "name": "tennis-companion",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
