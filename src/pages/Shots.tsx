@@ -45,10 +45,20 @@ const Shots: React.FC = () => {
 		}
 	};
 
-	function kickFromCourt(player: Player) {
+	const kickFromCourt = (player: Player) => {
 		setCurrentPlayers(currentPlayers.filter(cp => cp.name !== player.name));
 		setPlayers([...players, player]);
-	}
+	};
+
+	const addMistake = (player: Player) => {
+		player.score++;
+		console.log(currentPlayers);
+	};
+
+	const addShot = (player: Player) => {
+		player.shotCount++;
+		console.log(currentPlayers);
+	};
 
 	return (
 		<IonPage>
@@ -58,7 +68,12 @@ const Shots: React.FC = () => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className="ion-padding-horizontal">
-				<TennisCourt currentPlayers={currentPlayers} onKick={kickFromCourt} />
+				<TennisCourt
+					currentPlayers={currentPlayers}
+					onKick={kickFromCourt}
+					onMistake={addMistake}
+					onShot={addShot}
+				/>
 				<AddPlayer />
 				<PlayerList players={players} onClick={onSelectPlayer} />
 			</IonContent>
