@@ -50,6 +50,10 @@ const Shots: React.FC = () => {
 		setPlayers([...players, player]);
 	};
 
+	const addPlayer = (player: Player) => {
+		setPlayers([...players, player]);
+	};
+
 	const addMistake = (player: Player) => {
 		player.score++;
 		console.log(currentPlayers);
@@ -74,7 +78,7 @@ const Shots: React.FC = () => {
 					onMistake={addMistake}
 					onShot={addShot}
 				/>
-				<AddPlayer />
+				<AddPlayer addPlayer={addPlayer} />
 				<PlayerList players={players} onClick={onSelectPlayer} />
 			</IonContent>
 		</IonPage>
