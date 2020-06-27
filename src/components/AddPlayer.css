@@ -1,0 +1,8 @@
+.add-player form {
+	display: flex;
+	justify-content: space-between;
+}
+
+.add-player ion-input {
+	--padding-start: 0;
+}

@@ -10,6 +10,8 @@ import {
 import { personAddOutline } from 'ionicons/icons';
 import Player from '../models/player.model';
 
+import './AddPlayer.css';
+
 interface AddPlayerProps {
 	addPlayer(p: Player): void;
 }
@@ -28,26 +30,19 @@ const AddPlayer: React.FC<AddPlayerProps> = ({ addPlayer }) => {
 	};
 
 	return (
-		<div className="addPlayer">
-			<form onSubmit={handleSubmit}>
-				<IonGrid>
-					<IonRow>
-						<IonCol size="8">
-							<IonInput
-								type="text"
-								value={playerName}
-								onIonChange={e => setPlayerName(e.detail.value!)}
-								placeholder="Enter player name..."
-							></IonInput>
-						</IonCol>
-						<IonCol size="4">
-							<IonButton type="submit">
-								<IonIcon slot="start" icon={personAddOutline}></IonIcon>
-								Add Player
-							</IonButton>
-						</IonCol>
-					</IonRow>
-				</IonGrid>
+		<div className="add-player">
+			<form onSubmit={handleSubmit} className="ion-padding-vertical">
+				<IonInput
+					type="text"
+					value={playerName}
+					onIonChange={e => setPlayerName(e.detail.value!)}
+					placeholder="Enter player name..."
+				></IonInput>
+
+				<IonButton type="submit">
+					<IonIcon slot="start" icon={personAddOutline}></IonIcon>
+					Add
+				</IonButton>
 			</form>
 		</div>
 	);
