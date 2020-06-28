@@ -37,6 +37,9 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 	const [rememberPoints, setRememberPoints] = useState<boolean>(
 		gameSettings.rememberPoints
 	);
+	const [changePlayersAuto, setChangePlayersAuto] = useState<boolean>(
+		gameSettings.changePlayersAutomatically
+	);
 
 	const handleClose = () => {
 		const gs = new GameSettings(
@@ -62,7 +65,6 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 			</IonHeader>
 			<IonContent className="ion-padding">
 				<IonList>
-					<IonListHeader></IonListHeader>
 					<IonItem>
 						<IonLabel>Reset on shots</IonLabel>
 						<IonToggle
@@ -82,6 +84,13 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 						<IonToggle
 							checked={rememberShots}
 							onIonChange={e => setRememberShots(e.detail.checked)}
+						></IonToggle>
+					</IonItem>
+					<IonItem>
+						<IonLabel>Change Players Automatically</IonLabel>
+						<IonToggle
+							checked={changePlayersAuto}
+							onIonChange={e => setChangePlayersAuto(e.detail.checked)}
 						></IonToggle>
 					</IonItem>
 					<IonItem>
