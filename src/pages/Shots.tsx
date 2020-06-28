@@ -6,11 +6,19 @@ import {
 	IonTitle,
 	IonContent,
 	IonToolbar,
+	IonFooter,
+	IonButton,
+	IonModal,
+	IonButtons,
+	IonIcon,
 } from '@ionic/react';
 
 import TennisCourt from '../components/TennisCourt';
 import AddPlayer from '../components/AddPlayer';
 import PlayerList from '../components/PlayerList';
+import GameSettingsModal from './GameSettingsModal';
+import { GameSettings } from '../models/gameSettings.model';
+import { settingsSharp } from 'ionicons/icons';
 
 const playerList: Player[] = [
 	{
@@ -28,15 +36,20 @@ const playerList: Player[] = [
 		score: 0,
 		shotCount: 0,
 	},
+	{
+		name: 'Timmy',
+		score: 0,
+		shotCount: 0,
+	},
 ];
 
 const Shots: React.FC = () => {
-	const [players, setPlayers] = useState<Player[]>([]);
+	const [players, setPlayers] = useState<Player[]>(playerList);
 	const [currentPlayers, setCurrentPlayers] = useState<Player[]>([]);
-
-	useEffect(() => {
-		setPlayers(playerList);
-	}, []);
+	const [gameSettings, setGameSettings] = useState<GameSettings>(
+		new GameSettings()
+	);
+	const [showModal, setShowModal] = useState(false);
 
 	const onSelectPlayer = (player: Player) => {
 		if (currentPlayers.length < 4) {
@@ -45,7 +58,8 @@ const Shots: React.FC = () => {
 		}
 	};
 
-	const kickFromCourt = (player: Player) => {
+	const getShot = (player: Player) => {
+		player.score = 0;
 		setCurrentPlayers(currentPlayers.filter(cp => cp.name !== player.name));
 		setPlayers([...players, player]);
 	};
@@ -54,14 +68,24 @@ const Shots: React.FC = () => {
 		setPlayers([...players, player]);
 	};
 
-	const addMistake = (player: Player) => {
-		player.score++;
+	const addMistake = (index: number) => {
+		let newPlayers = [...currentPlayers];
+		newPlayers[index].score++;
+		setCurrentPlayers(newPlayers);
 		console.log(currentPlayers);
 	};
 
-	const addShot = (player: Player) => {
-		player.shotCount++;
-		console.log(currentPlayers);
+	const addShot = (index: number) => {
+		let newPlayers = [...currentPlayers];
+		let shotPlayer = newPlayers[index];
+		shotPlayer.shotCount++;
+		setCurrentPlayers(newPlayers);
+		getShot(shotPlayer);
+	};
+
+	const closeModal = (state: GameSettings) => {
+		setGameSettings(state);
+		setShowModal(false);
 	};
 
 	return (
@@ -69,17 +93,24 @@ const Shots: React.FC = () => {
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle>Shots</IonTitle>
+					<IonButtons slot="primary">
+						<IonButton color="secondary" onClick={() => setShowModal(true)}>
+							<IonIcon slot="icon-only" icon={settingsSharp} />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className="ion-padding-horizontal">
 				<TennisCourt
 					currentPlayers={currentPlayers}
-					onKick={kickFromCourt}
 					onMistake={addMistake}
 					onShot={addShot}
 				/>
 				<AddPlayer addPlayer={addPlayer} />
 				<PlayerList players={players} onClick={onSelectPlayer} />
+				<IonModal isOpen={showModal}>
+					<GameSettingsModal onClose={closeModal} gameSettings={gameSettings} />
+				</IonModal>
 			</IonContent>
 		</IonPage>
 	);

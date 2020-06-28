@@ -21,12 +21,15 @@ const AddPlayer: React.FC<AddPlayerProps> = ({ addPlayer }) => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		addPlayer({
-			name: playerName,
-			score: 0,
-			shotCount: 0,
-		});
-		setPlayerName('');
+		if (playerName.length) {
+			addPlayer({
+				name: playerName,
+				score: 0,
+				shotCount: 0,
+			});
+			setPlayerName('');
+		} else {
+		}
 	};
 
 	return (
