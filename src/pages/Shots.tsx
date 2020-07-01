@@ -50,7 +50,7 @@ const playerList: Player[] = [
 ];
 
 const Shots: React.FC = () => {
-	const [players, setPlayers] = useState<Player[]>(playerList);
+	const [players, setPlayers] = useState<Player[]>([]);
 	const [currentPlayers, setCurrentPlayers] = useState<Player[]>([]);
 	const [gameSettings, setGameSettings] = useState<GameSettings>(
 		new GameSettings()
