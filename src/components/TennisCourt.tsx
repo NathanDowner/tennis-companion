@@ -7,12 +7,14 @@ interface TennisCourtProps {
 	currentPlayers: Player[];
 	onMistake(index: number): any;
 	onShot(i: number): any;
+	rememberShots: boolean;
 }
 
 const TennisCourt: React.FC<TennisCourtProps> = ({
 	currentPlayers,
 	onMistake,
 	onShot,
+	rememberShots,
 }) => {
 	const handleShot = (e: any, index: number) => {
 		e.preventDefault();
@@ -22,34 +24,20 @@ const TennisCourt: React.FC<TennisCourtProps> = ({
 	return (
 		<div>
 			<h1>Tennis Court</h1>
-			<IonGrid>
-				<IonRow>
-					{currentPlayers.map((p, index) => (
-						<IonCol key={index} size="6">
-							{/* <div
-								className="player-tile"
-								onContextMenu={e => onShot(index)}
-								onClick={e => onMistake(index)}
-								// onDoubleClick={e => onShot(index)}
-							>
-								<div className="player-name">{p.name}</div>
-								<span>Shot Count: {p.shotCount}</span>
-								<span>Score: {p.score}</span>
-							</div> */}
-							<IonCard
-								button
-								className="player-tile"
-								onContextMenu={e => handleShot(e, index)}
-								onClick={e => onMistake(index)}
-							>
-								<h3 className="player-name">{p.name}</h3>
-								<span>Shot Count: {p.shotCount}</span>
-								<span>Score: {p.score}</span>
-							</IonCard>
-						</IonCol>
-					))}
-				</IonRow>
-			</IonGrid>
+			<div className="court">
+				{currentPlayers.map((p, idx) => (
+					<div
+						key={idx}
+						className="player-tile"
+						onContextMenu={e => onShot(idx)}
+						onClick={e => onMistake(idx)}
+					>
+						<div className="player-name">{p.name}</div>
+						{rememberShots && <span>Shot Count: {p.shotCount}</span>}
+						<span>Score: {p.score}</span>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
