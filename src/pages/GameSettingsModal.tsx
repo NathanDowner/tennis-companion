@@ -6,7 +6,6 @@ import {
 	IonTitle,
 	IonContent,
 	IonList,
-	IonListHeader,
 	IonItem,
 	IonLabel,
 	IonToggle,
@@ -28,9 +27,6 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 	gameSettings,
 }) => {
 	const [pointLimit, setPointLimit] = useState<number>(gameSettings.pointLimit);
-	const [resetOnShots, setResetOnShots] = useState<boolean>(
-		gameSettings.resetOnShots
-	);
 	const [rememberShots, setRememberShots] = useState<boolean>(
 		gameSettings.rememberShots
 	);
@@ -44,9 +40,9 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 	const handleClose = () => {
 		const gs = new GameSettings(
 			pointLimit,
-			resetOnShots,
 			rememberPoints,
-			rememberShots
+			rememberShots,
+			changePlayersAuto
 		);
 		onClose(gs);
 	};
@@ -65,13 +61,6 @@ const GameSettingsModal: React.FC<GameSettingsProps> = ({
 			</IonHeader>
 			<IonContent className="ion-padding">
 				<IonList>
-					<IonItem>
-						<IonLabel>Reset on shots</IonLabel>
-						<IonToggle
-							checked={resetOnShots}
-							onIonChange={e => setResetOnShots(e.detail.checked)}
-						></IonToggle>
-					</IonItem>
 					<IonItem>
 						<IonLabel>Remember Points</IonLabel>
 						<IonToggle
